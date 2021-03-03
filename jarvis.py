@@ -2,6 +2,7 @@ import webbrowser
 import pyttsx3
 import datetime
 import speech_recognition as sr
+import pyaudio
 import wikipedia
 import os
 
@@ -50,13 +51,24 @@ def takeCommand():
         return "None"
     return query
 
-if __name__ == "__main__":
-    wishMe()
-    while True:
-        query = takeCommand().lower()
+wishMe()
+query = takeCommand().lower()
 
-        if 'open google' in query.lower():
-            speak("Opening google")
-            url = "google.com"
-            chrome_path = 'C:\Program Files\Google\Chrome\Application\chrome.exe %s'
-            webbrowser.get(chrome_path).open(url)
+if 'wikipedia' in query.lower():
+    speak("Initializing Jarvis...")
+    query = query.replace("wikipedia", "")
+    results = wikipedia.summary(query, sentences=2)
+    print(results)
+    speak(results)
+
+elif 'open google' in query.lower():
+    speak("Opening google")
+    url = "google.com"
+    chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
+    webbrowser.get(chrome_path).open(url)
+
+elif 'open youtube' in query.lower():
+    speak("Opening youtube")
+    url = "youtube.com"
+    chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
+    webbrowser.get(chrome_path).open(url)
