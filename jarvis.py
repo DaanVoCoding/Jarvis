@@ -1,17 +1,27 @@
-import webbrowser
-import pyttsx3
 import datetime
-import speech_recognition as sr
-import pyaudio
-import wikipedia
 import os
+import smtplib
+import ssl
+import webbrowser
+
+import pyttsx3
+import pywhatkit
+import speech_recognition as sr
+import wikipedia
 
 MASTER = "Daan"
+
+smtp_server = "smtp.gmail.com"
+port = 587  # For starttls
+sender_email = "Your Email"
+password = ("Your Password")
+
+# Create a secure SSL context
+context = ssl.create_default_context()
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
-
 
 def speak(audio):
     engine.say(audio)
@@ -51,6 +61,8 @@ def takeCommand():
         return "None"
     return query
 
+
+
 wishMe()
 query = takeCommand().lower()
 
@@ -72,6 +84,12 @@ elif 'open youtube' in query.lower():
     url = "youtube.com"
     chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s'
     webbrowser.get(chrome_path).open(url)
+
+elif 'play something on youtube' in query.lower():
+    print("What do you want to see?")
+    speak("What do you want to see?")
+    query = takeCommand()
+    pywhatkit.playonyt(query)
 
 elif 'open the weather' in query.lower():
     speak("Opening the weather")
@@ -96,3 +114,40 @@ elif 'the time' in query.lower():
     strTime = datetime.datetime.now().strftime("%H:%M:%S")
     print(strTime)
     speak(f"{MASTER} the time is {strTime}")
+
+elif 'email to my dad' in query.lower():
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)  # Secure the connection
+        server.ehlo()  # Can be omitted
+        server.login(sender_email, password)
+        print("What should i send")
+        speak("What should i send")
+        query = takeCommand()
+        server.sendmail("Your Email", "Dad Email", query)
+    except Exception as e:
+        # Print any error messages to stdout
+        print(e)
+    finally:
+        server.quit()
+
+elif 'email to my mum' in query.lower():
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.ehlo()  # Can be omitted
+        server.starttls(context=context)  # Secure the connection
+        server.ehlo()  # Can be omitted
+        server.login(sender_email, password)
+        print("What should i send")
+        speak("What should i send")
+        query = takeCommand()
+        server.sendmail("Your Email", "Mum Email", query)
+        print("Email successfully send")
+    except Exception as e:
+        # Print any error messages to stdout
+        print(e)
+    finally:
+        server.quit()
+
+
