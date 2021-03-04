@@ -126,6 +126,7 @@ elif 'email to my dad' in query.lower():
         speak("What should i send")
         query = takeCommand()
         server.sendmail("Your Email", "Dad Email", query)
+        print("Email successfully send")
     except Exception as e:
         # Print any error messages to stdout
         print(e)
