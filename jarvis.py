@@ -9,7 +9,7 @@ import pywhatkit
 import speech_recognition as sr
 import wikipedia
 
-MASTER = "Daan"
+MASTER = "Your Name"
 
 smtp_server = "smtp.gmail.com"
 port = 587  # For starttls
