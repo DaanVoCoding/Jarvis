@@ -13,8 +13,8 @@ MASTER = "Daan"
 
 smtp_server = "smtp.gmail.com"
 port = 587  # For starttls
-sender_email = "Your Email"
-password = ("Your Password")
+sender_email = "daanvo.coding@gmail.com"
+password = "Your Password"
 
 # Create a secure SSL context
 context = ssl.create_default_context()
